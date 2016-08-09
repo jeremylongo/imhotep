@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  imhotep:
+    build: .
+    command: imhotep --repo_name="" --pr-number=0 --github-username="" --github-password=""
