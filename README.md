@@ -1,3 +1,9 @@
+Run it:
+- Create `ssh/id_rsa`
+- `docker-compose run imhotep imhotep --authenticated --repo_name="" --pr-number=0 --github-username="" --github-password=""`
+
+-----
+
 ![Imhotep](https://raw.github.com/justinabrahms/imhotep/master/imhotep.png)
 # Imhotep, the peaceful builder.
 
