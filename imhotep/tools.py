@@ -1,5 +1,6 @@
 from collections import defaultdict
 import logging
+import os
 
 log = logging.getLogger(__name__)
 
@@ -42,8 +43,9 @@ class Tool(object):
             to_find = ' -o '.join(['-name "*%s"' % ext
                                    for ext in self.get_file_extensions()])
 
-        cmd = 'cd %s && find %s %s | xargs %s' % (
-            dirname, dirname, to_find, self.get_command(
+        os.chdir(dirname)
+        cmd = 'find %s %s | xargs %s' % (
+            dirname, to_find, self.get_command(
                 dirname,
                 linter_configs=linter_configs))
         result = self.executor(cmd)
