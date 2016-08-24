@@ -21,6 +21,10 @@ class Tool(object):
     def get_configs(self):
         return list()
 
+    def get_extension(self, filename):
+        name, ext = os.path.splitext(filename)
+        return ext
+
     def invoke(self, dirname, filenames=set(), linter_configs=set()):
         """
         Main entrypoint for all plugins.
@@ -37,11 +41,13 @@ class Tool(object):
 
         """
         retval = defaultdict(lambda: defaultdict(list))
+        extensions = self.get_file_extensions()
         if len(filenames):
-            to_find = ' -o '.join(['-samefile "%s"' % f for f in filenames])
+            to_find = ' -o '.join(['-samefile "%s"' % f 
+                                   for f in filenames if self.get_extension(f) in extensions])
         else:
             to_find = ' -o '.join(['-name "*%s"' % ext
-                                   for ext in self.get_file_extensions()])
+                                   for ext in extensions])
 
         os.chdir(dirname)
         cmd = 'find %s %s | xargs %s' % (
